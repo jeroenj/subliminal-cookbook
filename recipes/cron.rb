@@ -18,6 +18,7 @@ node[:subliminal][:cron_jobs].each do |cron_job|
     cron_job[:path],
     cron_job[:options],
     "--languages #{node[:subliminal][:languages].join(' ')}",
+    ("--providers #{node[:subliminal][:providers].join(' ')}" if node[:subliminal][:providers]),
     ('--color' if node[:subliminal][:colorlog]),
     ('--verbose' if node[:subliminal][:verbose]),
     '--cache-file /tmp/subliminal.cache.dbm',
