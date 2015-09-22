@@ -1,1 +1,0 @@
-default[:subliminal][:colorlog] = true

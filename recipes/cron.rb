@@ -1,8 +1,9 @@
 include_recipe 'subliminal::default'
-include_recipe('subliminal::colorlog') if node[:subliminal][:colorlog]
 
 user 'subliminal' do
   system true
+  manage_home true
+  home '/home/subliminal' # subliminal's config is saved in ~/.config
   shell '/bin/false'
 end
 
@@ -15,14 +16,14 @@ end
 node[:subliminal][:cron_jobs].each do |cron_job|
   cmd = [
     node[:subliminal][:binary],
-    cron_job[:path],
+    'download',
+    node[:subliminal][:languages].map { |language| "--language #{language}" },
+    node[:subliminal][:providers].map { |provider| "--provider #{provider}" },
+    ('--verbose' if node[:subliminal][:verbose] && !node[:subliminal][:very_verbose]),
+    ('--verbose --verbose' if node[:subliminal][:very_verbose]),
     cron_job[:options],
-    "--languages #{node[:subliminal][:languages].join(' ')}",
-    ("--providers #{node[:subliminal][:providers].join(' ')}" if node[:subliminal][:providers]),
-    ('--color' if node[:subliminal][:colorlog]),
-    ('--verbose' if node[:subliminal][:verbose]),
-    '--cache-file /tmp/subliminal.cache.dbm',
-    "> #{::File.join node[:subliminal][:log_directory], cron_job[:name]}.log 2>&1"
+    cron_job[:path],
+    ">> #{::File.join node[:subliminal][:log_directory], cron_job[:name]}.log 2>&1"
   ].compact.join(' ')
 
   cron_d "subliminal-#{cron_job[:name]}" do
