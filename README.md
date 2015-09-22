@@ -13,22 +13,6 @@ The cron_d lwrp will be used to manage the cron jobs.
 
 Attributes
 ----------
-#### subliminal::default
-<table>
-  <tr>
-    <th>Key</th>
-    <th>Type</th>
-    <th>Description</th>
-    <th>Default</th>
-  </tr>
-  <tr>
-    <td><tt>['subliminal']['colorlog']</tt></td>
-    <td>Boolean</td>
-    <td>whether to include colorlog</td>
-    <td><tt>true</tt></td>
-  </tr>
-</table>
-
 #### subliminal::cron
 <table>
   <tr>
@@ -52,7 +36,13 @@ Attributes
   <tr>
     <td><tt>['subliminal']['verbose']</tt></td>
     <td>Boolean</td>
-    <td>whether to include colorlog</td>
+    <td>verbose output</td>
+    <td><tt>true</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['subliminal']['very_verbose']</tt></td>
+    <td>Boolean</td>
+    <td>very verbose output</td>
     <td><tt>true</tt></td>
   </tr>
   <tr>
@@ -80,10 +70,6 @@ Usage
 #### subliminal::default
 
 It installs subliminal using the python pip provider.
-
-#### subliminal::colorlog
-
-It installs colorlog using the python pip provider. You might need this if you want colorized logging.
 
 #### subliminal::cron
 
